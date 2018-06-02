@@ -12,7 +12,7 @@ class ApplicationController < ActionController::API
       return @user
     end
   end
-  
+
   def verify_authentication
     user = authenticate_with_http_token do |token, options|
       User.find_by(api_token: token)

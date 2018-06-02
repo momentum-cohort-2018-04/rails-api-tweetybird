@@ -5,6 +5,7 @@ class Api::V1::SessionsController < ApplicationController
         user = User.find_by(username: params[:username])
 
         if user && user.authenticate(params[:password])
+            session[:api_token] = user.api_token
             render json: { token: user.api_token }
         else
             render json: { error: "Invalid credentials" }, status: :unauthorized

@@ -17,7 +17,7 @@ class Api::V1::StoriesController < ApplicationController
   
     # POST /stories
     def create
-        :user_id = current_user.id 
+        current_user = User.find_by(api_token: api_token).id
         @story = Story.new(story_params)
         if @story.save
             render 'show.json', status: 201
