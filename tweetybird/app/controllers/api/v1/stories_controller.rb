@@ -1,5 +1,5 @@
 class Api::V1::StoriesController < ApplicationController
-    before_action :set_story, only: [:show, :update, :destroy]
+    before_action :set_story, only: [:show, :update, :destroy, :share]
     skip_before_action :verify_authentication, only: [:index, :show]
 
     # GET /stories
@@ -39,6 +39,18 @@ class Api::V1::StoriesController < ApplicationController
           render json: @story, status: 401
         end
     end
+
+    def share
+      @share = Story.new(story_params)
+      @share.story_id = @story.id
+      @share.user_id = current_user.id
+      @share.text = @story.text
+      if @story.save
+        render 'show.json', status: 201
+      else
+        render json: @share.errors, status: 400
+      end
+    end
   
     private
       # Use callbacks to share common setup or constraints between actions.
@@ -48,6 +60,6 @@ class Api::V1::StoriesController < ApplicationController
   
       # Only allow a trusted parameter "white list" through.
     def story_params
-        params.require(:story).permit(:text, :user_id)
+        params.require(:story).permit(:text, :user_id, :story_id)
     end
 end
