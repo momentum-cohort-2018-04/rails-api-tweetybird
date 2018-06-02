@@ -5,14 +5,16 @@ class ApplicationController < ActionController::API
   helper_method :current_user
  
   def current_user    
-    # if the session is not empty...
-    if session[:user_id]
-      # if I have the variable @user use that if not set it to this...
-      @user ||= User.find(session[:user_id])
-      return @user
-    end
+    @user ||= User.find_by(api_token: bearer_token)
+    return @user
   end
-  
+
+  def bearer_token
+    pattern = /^Bearer /
+    header  = request.headers['Authorization']
+    header.gsub(pattern, '') if header && header.match(pattern)
+  end
+
   def verify_authentication
     user = authenticate_with_http_token do |token, options|
       User.find_by(api_token: token)

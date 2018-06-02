@@ -11,5 +11,8 @@
 
 class Story < ApplicationRecord
   belongs_to :user
-  validates :text, presence: true, length: { min: 2, maximum: 250 }
+  belongs_to :story, optional: true
+
+  validates :text, presence: true 
+  validates_length_of :text, :minimum => 2, :maximum => 250 
 end

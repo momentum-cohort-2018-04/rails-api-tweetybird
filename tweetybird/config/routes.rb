@@ -3,7 +3,9 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :stories, format: "json"
+      resources :stories, format: "json" member do
+        post :share
+      end
       resources :users, format: "json"
       resource :sessions, only: :create
     end
