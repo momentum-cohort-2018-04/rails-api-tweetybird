@@ -28,12 +28,20 @@ class Api::V1::StoriesController < ApplicationController
   
     # PATCH/PUT /stories/1
     def update
-      render 'show.json', status: 405
+      if current_user.admin
+        if @story.update(story_params)
+          render 'show.json', status: 202
+        else
+          render json: @story.errors, status: 400
+        end
+      else
+        render 'show.json', status: 405
+      end
     end
   
     # DELETE /stories/1
     def destroy
-        if current_user.id == @story.user_id
+        if current_user.admin || current_user.id == @story.user_id
             @story.destroy
         else
           render json: @story, status: 401

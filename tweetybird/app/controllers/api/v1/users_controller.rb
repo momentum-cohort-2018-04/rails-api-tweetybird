@@ -38,7 +38,11 @@ class Api::V1::UsersController < ApplicationController
 
   # DELETE /stories/1
   def destroy
-    @user.destroy
+    if current_user.admin || @user.id == current_user.id 
+      @user.destroy
+    else
+      render 'show.json', status: 401
+    end
   end
 
   private
