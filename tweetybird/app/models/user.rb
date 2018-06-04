@@ -11,6 +11,9 @@
 #
 
 class User < ApplicationRecord
+  acts_as_followable
+  acts_as_follower
+  
   has_many :stories
   
   has_secure_password
