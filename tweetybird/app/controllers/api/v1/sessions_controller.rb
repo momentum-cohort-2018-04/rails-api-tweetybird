@@ -8,7 +8,7 @@ class Api::V1::SessionsController < ApplicationController
             session[:api_token] = user.api_token
             render json: { token: user.api_token }
         else
-            render json: { error: "Invalid credentials" }, status: :unauthorized
+            render json: { error: "Invalid credentials" }, status: 401
         end
     end
 

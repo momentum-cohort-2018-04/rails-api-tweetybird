@@ -12,4 +12,6 @@ Rails.application.routes.draw do
       resource :sessions, only: :create
     end
   end
+  resource :docs, only: :index
+  root 'docs#index'
 end

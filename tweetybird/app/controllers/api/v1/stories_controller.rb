@@ -5,13 +5,13 @@ class Api::V1::StoriesController < ApplicationController
     # GET /stories
     def index
       @stories = Story.all
-      render json: @stories
+      # render json: @stories
       # commented out because a jbuilder template has been added
     end
   
     # GET /stories/1
     def show
-      render json: @story
+      # render json: @story
       # commented out because a jbuilder template has been added
     end
   
