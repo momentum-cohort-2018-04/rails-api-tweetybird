@@ -5,8 +5,8 @@ class ApplicationController < ActionController::API
   helper_method :current_user
  
   def current_user    
-    @user ||= User.find_by(api_token: bearer_token)
-    return @user
+    @c_user ||= User.find_by(api_token: bearer_token)
+    return @c_user
   end
 
   def bearer_token
